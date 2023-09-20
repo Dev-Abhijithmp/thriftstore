@@ -11,7 +11,7 @@ class ViewProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("View staffs"),
+        title: const Text("View Products"),
         backgroundColor: Colors.green,
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -19,11 +19,11 @@ class ViewProducts extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError == true) {
             return const Somethingwentwrong();
-          } else if (snapshot.connectionState == ConnectionState.active) {
+          } else if (snapshot.hasData) {
             List<DocumentSnapshot> data = snapshot.data!.docs;
             return ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                return singlecollectionstaff(data[index], context);
+                return singleProduct(data[index], context);
               },
               itemCount: data.length,
             );
@@ -36,10 +36,10 @@ class ViewProducts extends StatelessWidget {
   }
 }
 
-Widget singlecollectionstaff(DocumentSnapshot doc, context) {
+Widget singleProduct(DocumentSnapshot doc, context) {
   return Container(
     width: double.infinity,
-    height: 350,
+    height: 500,
     decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
             topRight: Radius.circular(30), bottomLeft: Radius.circular(30)),
@@ -47,9 +47,13 @@ Widget singlecollectionstaff(DocumentSnapshot doc, context) {
     margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
     child: Column(
       children: [
-        staffitems("Name", doc.get('name')),
-        staffitems("Email", doc.get('email')),
-        staffitems("Phone", doc.get('phone')),
+        SizedBox(
+          height: 200,
+          width: 300,
+          child: Image(image: NetworkImage(doc.get('url'))),
+        ),
+        staffitems("Product Name", doc.get('name')),
+        staffitems("price", doc.get('price')),
         staffitems("Verifiedornot", doc.get('isverified').toString()),
         const SizedBox(
           height: 20,
@@ -59,15 +63,13 @@ Widget singlecollectionstaff(DocumentSnapshot doc, context) {
           children: [
             InkWell(
               onTap: () {
-                removeuser(doc.id);
+                removeproduct(doc.id);
               },
               child: Container(
                 height: 40,
                 width: 120,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(30),
-                        bottomLeft: Radius.circular(30)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
                     color: Colors.green),
                 child: const Center(
                   child: Text("Remove"),
@@ -81,10 +83,8 @@ Widget singlecollectionstaff(DocumentSnapshot doc, context) {
               child: Container(
                 height: 40,
                 width: 120,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(30),
-                        bottomLeft: Radius.circular(30)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
                     color: Colors.green),
                 child: const Center(
                   child: Text("verify"),

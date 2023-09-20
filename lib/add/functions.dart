@@ -26,7 +26,8 @@ Future<Map<String, String>> addproduct({
         .doc(FirebaseAuth.instance.currentUser!.uid +
             (documentSnapshot.get('images') + 1).toString())
         .set({
-      'uid': FirebaseAuth.instance.currentUser!.uid,
+      'uid': FirebaseAuth.instance.currentUser!.uid +
+          (documentSnapshot.get('images') + 1).toString(),
       'address': address,
       'category': category,
       'type': type,
@@ -52,42 +53,7 @@ Future<Map<String, String>> addproduct({
   }
 }
 
-Future<Map<String, String>> Acceptfood(
-    String donationtype,
-    String foodtype,
-    String weight,
-    String suggestedvehcle,
-    String address,
-    String district,
-    String phone,
-    String donationid
-    //Position position,
-    ) async {
-  try {
-    await FirebaseFirestore.instance.collection('accept').doc(donationid).set({
-      'uid': FirebaseAuth.instance.currentUser!.uid,
-      'donationid': donationid,
-      'donationtype': donationtype,
-      'foodtype': foodtype,
-      'status': "ongoing",
-      'weight': weight,
-      'vehcle': suggestedvehcle,
-      'address': address,
-      'district': district,
-      'phone': phone,
-      'date': DateTime.now(),
-      // 'location': {
-      //   'latitude': position.latitude,
-      //   'longitude': position.longitude,
-      // },
-    });
-    await updatestatus(donationid, 'Accepted');
 
-    return {'status': "success"};
-  } on FirebaseException catch (e) {
-    return {'status': e.message.toString()};
-  }
-}
 
 FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 Future<Map<String, String>> addimagetostorage(File images) async {

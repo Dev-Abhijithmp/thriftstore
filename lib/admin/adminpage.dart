@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thriftstore/admin/viewstaff.dart';
+import 'package:thriftstore/admin/viewproducts.dart';
 import 'package:thriftstore/authentication/authenticate.dart';
 
 class Adminpage extends StatelessWidget {
@@ -19,7 +19,7 @@ class Adminpage extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => ViewProducts()));
+                  context, MaterialPageRoute(builder: (_) => const ViewProducts()));
             },
             child: Container(
               height: 50,

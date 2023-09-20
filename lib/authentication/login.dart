@@ -85,6 +85,7 @@ class LoginPageState extends State<LoginPage> {
               child: TextField(
                 controller: controllerPass,
                 cursorColor: mainColor,
+                obscureText: true,
                 decoration: InputDecoration(
                   icon: Icon(Icons.vpn_key, color: mainColor),
                   hintText: "ENTER THE PASSWORD",

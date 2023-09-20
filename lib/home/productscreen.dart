@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
@@ -62,6 +63,9 @@ class ProductHome extends StatelessWidget {
           "Thriftstore",
           style: GoogleFonts.abhayaLibre(color: Colors.black),
         ),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
+        ],
         backgroundColor: mainColor,
       ),
       body: SingleChildScrollView(
@@ -100,14 +104,58 @@ class ProductHome extends StatelessWidget {
                 ),
                 Text(
                   "Categories",
-                  style: GoogleFonts.lato(color: Colors.blue, fontSize: 20),
+                  style: GoogleFonts.lato(color: Colors.black, fontSize: 20),
                 ),
               ],
             ),
             const SizedBox(
               height: 20,
             ),
-            _categories(context, data),
+            DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: mainColor),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white),
+                      width: 200,
+                      height: 30,
+                      child: TabBar(
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        indicator: BoxDecoration(
+                          color: mainColor,
+                          borderRadius: BorderRadius.circular(
+                            20,
+                          ),
+                        ),
+                        labelColor: Colors.white,
+                        unselectedLabelColor: Colors.black,
+                        //dividerColor: lightPrimary1,
+                        dividerColor: mainColor,
+                        tabs: const [
+                          Tab(
+                            text: "Rent",
+                          ),
+                          Tab(
+                            text: "Sale",
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 700,
+                      child: TabBarView(
+                        clipBehavior: Clip.none,
+                        children: [
+                          _categories(context, data),
+                          _categories(context, data),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
           ],
         ),
       ),

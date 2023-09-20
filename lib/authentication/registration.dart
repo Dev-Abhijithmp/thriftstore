@@ -133,6 +133,7 @@ class RegisterState extends State<Register> {
           ],
         ),
         child: TextField(
+          obscureText: true,
           controller: controllerPass,
           cursorColor: mainColor,
           decoration: const InputDecoration(
@@ -163,6 +164,7 @@ class RegisterState extends State<Register> {
           ],
         ),
         child: TextField(
+          obscureText: true,
           controller: controllerRepass,
           cursorColor: mainColor,
           decoration: const InputDecoration(

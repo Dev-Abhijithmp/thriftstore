@@ -18,9 +18,9 @@ AlertDialog alertadmin(String title, String content, context) {
   );
 }
 
-Future<Map<String, String?>> removeuser(String uid) async {
+Future<Map<String, String?>> removeproduct(String uid) async {
   try {
-    await FirebaseFirestore.instance.collection('user').doc().delete();
+    await FirebaseFirestore.instance.collection('products').doc(uid).delete();
     return {"status": "success"};
   } on FirebaseException catch (e) {
     return {"status": e.message};
@@ -29,7 +29,7 @@ Future<Map<String, String?>> removeuser(String uid) async {
 
 Future<Map<String, String?>> verifyproduct(String uid) async {
   try {
-    await FirebaseFirestore.instance.collection('user').doc(uid).update({
+    await FirebaseFirestore.instance.collection('products').doc(uid).update({
       'isverified': true,
     });
     return {"status": "success"};
