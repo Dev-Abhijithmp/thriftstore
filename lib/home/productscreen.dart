@@ -6,11 +6,47 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:thriftstore/sellorrent/sellorrent.dart';
 import 'package:thriftstore/widgets.dart';
 
+List<String> img = [
+  'images/1.jpeg',
+  'images/2.jpeg',
+  'images/3.jpeg',
+];
+List<Map<String, dynamic>> data = [
+  {
+    'title': "chain",
+    'url':
+        "https://img.freepik.com/free-photo/display-shiny-elegant-gold-chain_23-2149635331.jpg?w=826&t=st=1695230574~exp=1695231174~hmac=e0ac22f0322e16d93a4f908dd97b4c7412e7b25d8a70bd75f118fe210c5fc437"
+  },
+  {
+    'title': "Rings",
+    'url':
+        "https://as2.ftcdn.net/v2/jpg/00/71/67/87/1000_F_71678766_kPinbw5YXRSJrlwwT8SmA90TgjBu64Ng.jpg"
+  },
+  {
+    'title': "Bangles",
+    'url':
+        "https://cdnmedia-breeze.vaibhavjewellers.com/media/webp_image/catalog/product/cache/40285937a65a1c81bb16d6469aab5e06/image/91825df0/vaibhav-jewellers-22k-antique-gold-bangles-125vg1210-125vg1210.webp"
+  },
+  {
+    'title': "Gowns",
+    'url':
+        "https://images.pexels.com/photos/1635664/pexels-photo-1635664.jpeg?cs=srgb&dl=pexels-li-jianhua-1635664.jpg&fm=jpg"
+  },
+  {
+    'title': "Kurthas",
+    'url':
+        "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/19494072/2022/8/24/fbd5a6dd-2f67-48fc-9341-72f91acca09b1661330892106-Kurta-Pyjama-Set-2971661330890568-1.jpg"
+  },
+];
+
 class ProductHome extends StatelessWidget {
   const ProductHome({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(
@@ -23,117 +59,57 @@ class ProductHome extends StatelessWidget {
       ),
       appBar: AppBar(
         title: Text(
-          "Triftstore",
-          style: GoogleFonts.lato(color: Colors.black),
+          "Thriftstore",
+          style: GoogleFonts.abhayaLibre(color: Colors.black),
         ),
         backgroundColor: mainColor,
       ),
-      body: Homepage(),
-    );
-  }
-}
-
-class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
-
-  @override
-  _HomepageState createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ));
-
-    List<String> img = [
-      'images/duke390.jpeg',
-      'images/g310.jpeg',
-      'images/himalayan.jpeg',
-      'images/ninja.jpeg'
-    ];
-    List<Map<String, dynamic>> data = [
-      {
-        'title': "Jackets",
-        'url':
-            "https://5.imimg.com/data5/TR/XS/MY-3513908/htb1zf4egfxxxxxxxpxxq6xxfxxxq-1000x1000.jpg"
-      },
-      {
-        'title': "Helmets",
-        'url':
-            "https://images.unsplash.com/photo-1603799091901-f0034ac3e7fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-      },
-      {
-        'title': "Gloves",
-        'url':
-            "https://images-eu.ssl-images-amazon.com/images/I/51H8sdJdXBL._SX300_SY300_QL70_FMwebp_.jpg"
-      },
-      {
-        'title': "Boots",
-        'url': "https://m.media-amazon.com/images/I/812HUl6A1YL._SL1500_.jpg"
-      },
-      {
-        'title': "Parts",
-        'url':
-            "https://i0.wp.com/vfxdownload.com/wp-content/uploads/2019/12/1920x1080.jpg?w=590&ssl=1"
-      },
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 200,
+              child: Swiper(
+                fade: 1,
+                autoplay: true,
+                itemCount: img.length,
+                controller: SwiperController(),
+                pagination: const SwiperPagination(
+                  builder: SwiperPagination.dots,
+                  alignment: Alignment.bottomCenter,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: Image.asset(
+                      img[index],
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
               children: [
-                SizedBox(
-                  height: 200,
-                  child: Swiper(
-                    fade: 1,
-                    autoplay: true,
-                    itemCount: img.length,
-                    controller: SwiperController(),
-                    pagination: const SwiperPagination(
-                      builder: SwiperPagination.dots,
-                      alignment: Alignment.bottomCenter,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        child: Image.asset(
-                          img[index],
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
-                  ),
-                ),
                 const SizedBox(
-                  height: 20,
+                  width: 20,
                 ),
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "Categories",
-                      style: GoogleFonts.lato(color: Colors.blue, fontSize: 20),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                _categories(context, data),
-                const SizedBox(
-                  height: 60,
+                Text(
+                  "Categories",
+                  style: GoogleFonts.lato(color: Colors.blue, fontSize: 20),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            _categories(context, data),
+          ],
+        ),
       ),
     );
   }
@@ -227,7 +203,7 @@ Widget _appbar(context) {
 Widget _categories(context, List<Map<String, dynamic>> data) {
   return SizedBox(
     width: double.infinity,
-    height: 300,
+    height: 700,
     child: GridView.custom(
       scrollDirection: Axis.vertical,
       physics: const NeverScrollableScrollPhysics(),

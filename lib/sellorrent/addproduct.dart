@@ -19,13 +19,13 @@ class AddProduct extends StatefulWidget {
 
 TextEditingController pricecontroller = TextEditingController();
 TextEditingController controlleraddress = TextEditingController();
-TextEditingController controllerdistrict = TextEditingController();
 TextEditingController controllernum = TextEditingController();
 TextEditingController namecontroller = TextEditingController();
 bool isloading = false;
 File? _pickedImage;
 bool loading = false;
 bool show = true;
+String dropdownValue = 'ring';
 
 class AddProductState extends State<AddProduct> {
   @override
@@ -55,20 +55,20 @@ class AddProductState extends State<AddProduct> {
       body: SingleChildScrollView(
           child: Column(children: [
         Container(
-            height: 150,
+            height: 130,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(50),
                   bottomRight: Radius.circular(50)),
             ),
             child: Container(
-              margin: EdgeInsets.only(right: 30, top: 60, left: 40),
+              margin: EdgeInsets.only(right: 30, top: 40, left: 40),
               alignment: Alignment.center,
               child: Text("Add product",
                   style: GoogleFonts.blackHanSans(
                       fontWeight: FontWeight.w300,
-                      fontSize: 30,
-                      textStyle: TextStyle(color: Colors.white))),
+                      fontSize: 20,
+                      textStyle: TextStyle(color: mainColor))),
             )),
         Container(
             height: 180,
@@ -122,6 +122,18 @@ class AddProductState extends State<AddProduct> {
           padding: EdgeInsets.only(left: 20, right: 20),
           child: Column(children: [
             TextFormField(
+              controller: namecontroller,
+              decoration: InputDecoration(labelText: "Enter name of product"),
+            ),
+          ]),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Column(children: [
+            TextFormField(
               controller: pricecontroller,
               decoration: InputDecoration(labelText: "Enter price of product"),
             ),
@@ -130,30 +142,6 @@ class AddProductState extends State<AddProduct> {
         SizedBox(
           height: 10,
         ),
-        // Padding(
-        //   padding: const EdgeInsets.all(16.0),
-        //   child: DropdownButtonFormField<String>(
-        //     decoration: InputDecoration(labelText: 'Donation Weight Type:'),
-        //     value: donationweight,
-        //     icon: const Icon(Icons.monitor_weight),
-        //     iconSize: 24,
-        //     elevation: 16,
-        //     style: const TextStyle(color: Colors.deepPurple),
-        //     onChanged: (String? newValue1) {
-        //       setState(() {
-        //         donationweight = newValue1!;
-        //       });
-        //     },
-        //     items: <String>['1-10kg', '10-30kg', '30-50kg', '50 above']
-        //         .map<DropdownMenuItem<String>>((String value) {
-        //       return DropdownMenuItem<String>(
-        //         value: value,
-        //         child: Text(value),
-        //       );
-        //     }).toList(),
-        //   ),
-        // ),
-
         Padding(
           padding: EdgeInsets.only(left: 20, right: 20),
           child: Column(children: [
@@ -167,13 +155,27 @@ class AddProductState extends State<AddProduct> {
           height: 20,
         ),
         Padding(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Column(children: [
-            TextFormField(
-              controller: controllerdistrict,
-              decoration: InputDecoration(labelText: "Enter your district"),
-            ),
-          ]),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: DropdownButtonFormField<String>(
+            decoration: InputDecoration(labelText: 'Category:'),
+            value: dropdownValue,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownValue = newValue!;
+              });
+            },
+            items: <String>['ring', 'bangle', 'chain', 'kurtha', 'saree']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
         ),
         SizedBox(
           height: 20,
@@ -198,29 +200,43 @@ class AddProductState extends State<AddProduct> {
             ? InkWell(
                 onTap: () async {
                   if (controlleraddress.text == "" ||
-                      controllerdistrict.text == "" ||
+                      dropdownValue == "" ||
                       pricecontroller.text == "" ||
                       controllernum.text.length < 10) {
                     showdialogue("Error", "Fill all the fields", context);
+                  } else if (_pickedImage == null) {
+                    showdialogue("Error", "Fill all the fields", context);
                   } else {
                     isloading = true;
-                    Map<String, String> flag = await addproduct(
-                        type: widget.type,
-                        url: "",
-                        name: namecontroller.text,
-                        price: pricecontroller.text,
-                        address: controlleraddress.text,
-                        district: controllerdistrict.text,
-                        phone: controllernum.text);
-                    if (flag['status'] == 'success') {
-                      showdialogue("success", "success", context);
-                      setState(() {
-                        isloading = false;
-                      });
+                    setState(() {
+                      
+                    });
+                    Map<String, dynamic> imageflag =
+                        await addimagetostorage(_pickedImage!);
+                    if (imageflag['status'] == 'success') {
+                      Map<String, String> flag = await addproduct(
+                          type: widget.type,
+                          url: imageflag['url'],
+                          name: namecontroller.text,
+                          price: pricecontroller.text,
+                          address: controlleraddress.text,
+                          phone: controllernum.text,
+                          category: dropdownValue);
+                      if (flag['status'] == 'success') {
+                        showdialogue("success", "success", context);
+                        setState(() {
+                          isloading = false;
+                        });
+                      } else {
+                        setState(() {
+                          isloading = false;
+                          showdialogue("Error", flag['status']!, context);
+                        });
+                      }
                     } else {
                       setState(() {
                         isloading = false;
-                        showdialogue("Error", flag['status']!, context);
+                        showdialogue("Error", imageflag['status']!, context);
                       });
                     }
                   }

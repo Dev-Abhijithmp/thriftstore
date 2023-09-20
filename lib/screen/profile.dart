@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:thriftstore/authentication/authenticate.dart';
+import 'package:thriftstore/authentication/signoutstates.dart';
 import 'package:thriftstore/innerscreen/loadingpage.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
 import 'package:thriftstore/widgets.dart';
@@ -35,34 +37,6 @@ class Profilepage extends StatelessWidget {
                 style:
                     GoogleFonts.blackHanSans(fontSize: 40, color: Colors.white),
               ),
-
-              // Stack(
-              //   children: [
-              //     Container(
-              //       padding: EdgeInsets.all(10.0),
-              //       width: 150,
-              //       height: 150,
-              //       decoration: BoxDecoration(
-              //         border: Border.all(color: Colors.grey, width: 5),
-              //         shape: BoxShape.circle,
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //     Positioned(
-              //       bottom: 0,
-              //       right: 0,
-              //       child: CircleAvatar(
-              //           backgroundColor: Colors.orange,
-              //           child: IconButton(
-              //             icon: Icon(
-              //               Icons.edit,
-              //               color: Colors.black,
-              //             ),
-              //             onPressed: () {},
-              //           )),
-              //     )
-              //   ],
-              // ),
             ]),
           ),
           Padding(
@@ -109,6 +83,21 @@ class Profilepage extends StatelessWidget {
                           subtitle: Text(
                             doc.get('phone'),
                             style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: () => signout(),
+                          child: Container(
+                            width: 200,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: mainColor,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Center(
+                              child: Text("Logout"),
+                            ),
                           ),
                         ),
                         SizedBox(height: 10),

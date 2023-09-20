@@ -29,7 +29,7 @@ class LoginPageState extends State<LoginPage> {
               height: 150,
             ),
             Text(
-              "Triftstore",
+              "Thriftstore",
               style: GoogleFonts.lato(
                   color: mainColor, fontSize: 30, fontWeight: FontWeight.bold),
             ),

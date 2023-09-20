@@ -14,7 +14,8 @@ Future<void> createuserprofile(
     'id': uid,
     'name': name,
     'email': email,
-    'donations': 0,
     'phone': phone,
+    'images': 0,
+    'role': 'user'
   });
 }

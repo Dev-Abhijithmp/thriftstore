@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:thriftstore/sellorrent/addproduct.dart';
 import 'package:thriftstore/widgets.dart';
 
-bool is_selected = false;
+bool isSelected = false;
 
 class SellorRent extends StatefulWidget {
   const SellorRent({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class SellorRentState extends State<SellorRent> {
       welcomecolor[0] = Colors.white;
       welcomecolor[1] = Colors.white;
       welcomecolor[val] = mainColor;
-      is_selected = true;
+      isSelected = true;
     });
   }
 
@@ -93,14 +93,14 @@ class SellorRentState extends State<SellorRent> {
                     child: Container(
                       height: 90,
                       width: 90,
-                      child: Icon(
-                        Icons.shopping_bag,
-                        size: 60,
-                      ),
                       decoration: BoxDecoration(
                           color: welcomecolor[1],
                           border: Border.all(color: mainColor, width: 2),
                           borderRadius: BorderRadius.circular(50)),
+                      child: Icon(
+                        Icons.shopping_bag,
+                        size: 60,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -121,10 +121,10 @@ class SellorRentState extends State<SellorRent> {
           SizedBox(
             height: 300,
           ),
-          is_selected
+          isSelected
               ? GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return page[index];
                     }));

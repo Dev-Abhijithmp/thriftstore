@@ -44,7 +44,7 @@ class RegisterState extends State<Register> {
         ),
         child: TextField(
           controller: controllername,
-          cursorColor: const Color(0xffF5591F),
+          cursorColor: mainColor,
           decoration: const InputDecoration(
             icon: Icon(Icons.person, color: mainColor),
             hintText: "ENTER THE NAME",

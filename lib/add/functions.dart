@@ -10,7 +10,7 @@ Future<Map<String, String>> addproduct({
   required String name,
   required String price,
   required String address,
-  required String district,
+  required String category,
   required String phone,
 }
     //Position position,
@@ -22,19 +22,20 @@ Future<Map<String, String>> addproduct({
         .get();
 
     await FirebaseFirestore.instance
-        .collection('donations')
+        .collection('products')
         .doc(FirebaseAuth.instance.currentUser!.uid +
-            (documentSnapshot.get('donations').toString()))
+            (documentSnapshot.get('images') + 1).toString())
         .set({
       'uid': FirebaseAuth.instance.currentUser!.uid,
-      'donationid': (FirebaseAuth.instance.currentUser!.uid +
-          (documentSnapshot.get('donations').toString())),
-
-      'status': "placed",
       'address': address,
-      'district': district,
+      'category': category,
+      'type': type,
+      'name': name,
+      'price': price,
+      'url': url,
       'phone': phone,
       'date': DateTime.now(),
+      'isverified': false,
       // 'location': {
       //   'latitude': position.latitude,
       //   'longitude': position.longitude,
@@ -44,7 +45,7 @@ Future<Map<String, String>> addproduct({
     await FirebaseFirestore.instance
         .collection('user')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({'donations': (documentSnapshot.get('donations') + 1)});
+        .update({'images': (documentSnapshot.get('images') + 1)});
     return {'status': "success"};
   } on FirebaseException catch (e) {
     return {'status': e.message.toString()};
@@ -95,13 +96,15 @@ Future<Map<String, String>> addimagetostorage(File images) async {
         .collection('user')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
+    int count = int.parse(documentSnapshot.get('images').toString());
+
     await FirebaseStorage.instance
         .ref(
-            'requestimages/${FirebaseAuth.instance.currentUser!.uid}${documentSnapshot.get('requests')}')
+            'requestimages/${FirebaseAuth.instance.currentUser!.uid}${count + 1}')
         .putFile(images);
     String sample = await FirebaseStorage.instance
         .ref(
-            'requestimages/${FirebaseAuth.instance.currentUser!.uid}${documentSnapshot.get('requests')}')
+            'requestimages/${FirebaseAuth.instance.currentUser!.uid}${count + 1}')
         .getDownloadURL();
 
     return {'status': "success", 'url': sample.toString()};

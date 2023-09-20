@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:thriftstore/authentication/signoutstates.dart';
 import 'package:thriftstore/innerscreen/loadingpage.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
+import 'package:thriftstore/widgets.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,11 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: mainColor,
+        primarySwatch: Colors.red,
+        useMaterial3: true,
+      ),
       home: FutureBuilder(
           future: _initialization,
           builder: (context, snapshot) {
