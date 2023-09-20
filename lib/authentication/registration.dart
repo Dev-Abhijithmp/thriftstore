@@ -169,7 +169,7 @@ class RegisterState extends State<Register> {
           cursorColor: mainColor,
           decoration: const InputDecoration(
             icon: Icon(Icons.password, color: mainColor),
-            hintText: "RE-ENTER THE PAASWORD",
+            hintText: "RE-ENTER THE PASSWORD",
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
           ),

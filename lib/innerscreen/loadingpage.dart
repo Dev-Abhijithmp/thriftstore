@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:thriftstore/widgets.dart';
 
 class Loadingpage extends StatelessWidget {
   const Loadingpage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: Container(
-              width: MediaQuery.of(context).size.width * 0.2,
-              child: CircularProgressIndicator(
-                color: Colors.green,
-              )),
+          child: CircularProgressIndicator(
+            color: mainColor,
+          ),
         ));
   }
 }

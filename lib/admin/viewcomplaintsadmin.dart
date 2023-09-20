@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:thriftstore/admin/adminfunctions.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
+import 'package:thriftstore/widgets.dart';
 
 class ViewcomplaintAdmin extends StatelessWidget {
   const ViewcomplaintAdmin({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ Widget singlecomplaintitem(DocumentSnapshot doc, context) {
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(topRight: Radius.circular(30)),
-        border: Border.all(color: Colors.green)),
+        border: Border.all(color: admincolor)),
     child: Column(
       children: [
         Padding(
@@ -61,7 +62,7 @@ Widget singlecomplaintitem(DocumentSnapshot doc, context) {
               margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.green),
+                  border: Border.all(color: admincolor),
                   image:
                       DecorationImage(image: NetworkImage(doc.get('image')))),
             ),
@@ -105,7 +106,7 @@ Widget singlecomplaintitem(DocumentSnapshot doc, context) {
               //           child: Container(
               //             height: 30,
               //             width: 60,
-              //             color: Colors.green,
+              //             color: admincolor,
               //             child: const Center(
               //               child: Text(
               //                 "remove",

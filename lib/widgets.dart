@@ -18,3 +18,6 @@ showdialogue(String title, String content, context) {
 }
 
 const Color mainColor = Color.fromRGBO(239, 149, 149, 1);
+const Color admincolor = Color.fromRGBO(181, 201, 154, 1);
+
+

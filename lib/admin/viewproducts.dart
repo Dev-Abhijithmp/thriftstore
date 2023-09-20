@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:thriftstore/admin/adminfunctions.dart';
 import 'package:thriftstore/innerscreen/loadingpage.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
+import 'package:thriftstore/widgets.dart';
 
 class ViewProducts extends StatelessWidget {
   const ViewProducts({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class ViewProducts extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("View Products"),
-        backgroundColor: Colors.green,
+        backgroundColor: admincolor,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('products').snapshots(),
@@ -43,7 +44,7 @@ Widget singleProduct(DocumentSnapshot doc, context) {
     decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
             topRight: Radius.circular(30), bottomLeft: Radius.circular(30)),
-        border: Border.all(color: Colors.green)),
+        border: Border.all(color: admincolor)),
     margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
     child: Column(
       children: [
@@ -69,8 +70,7 @@ Widget singleProduct(DocumentSnapshot doc, context) {
                 height: 40,
                 width: 120,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.green),
+                    borderRadius: BorderRadius.circular(20), color: admincolor),
                 child: const Center(
                   child: Text("Remove"),
                 ),
@@ -84,8 +84,7 @@ Widget singleProduct(DocumentSnapshot doc, context) {
                 height: 40,
                 width: 120,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.green),
+                    borderRadius: BorderRadius.circular(20), color: admincolor),
                 child: const Center(
                   child: Text("verify"),
                 ),
