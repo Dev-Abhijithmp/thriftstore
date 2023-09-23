@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:thriftstore/screen/cart.dart';
+import 'package:thriftstore/screen/productlistingpage.dart';
 import 'package:thriftstore/sellorrent/sellorrent.dart';
 import 'package:thriftstore/widgets.dart';
 
@@ -19,22 +21,22 @@ List<Map<String, dynamic>> data = [
         "https://img.freepik.com/free-photo/display-shiny-elegant-gold-chain_23-2149635331.jpg?w=826&t=st=1695230574~exp=1695231174~hmac=e0ac22f0322e16d93a4f908dd97b4c7412e7b25d8a70bd75f118fe210c5fc437"
   },
   {
-    'title': "Rings",
+    'title': "ring",
     'url':
         "https://as2.ftcdn.net/v2/jpg/00/71/67/87/1000_F_71678766_kPinbw5YXRSJrlwwT8SmA90TgjBu64Ng.jpg"
   },
   {
-    'title': "Bangles",
+    'title': "bangles",
     'url':
         "https://cdnmedia-breeze.vaibhavjewellers.com/media/webp_image/catalog/product/cache/40285937a65a1c81bb16d6469aab5e06/image/91825df0/vaibhav-jewellers-22k-antique-gold-bangles-125vg1210-125vg1210.webp"
   },
   {
-    'title': "Gowns",
+    'title': "gowns",
     'url':
         "https://images.pexels.com/photos/1635664/pexels-photo-1635664.jpeg?cs=srgb&dl=pexels-li-jianhua-1635664.jpg&fm=jpg"
   },
   {
-    'title': "Kurthas",
+    'title': "kurthas",
     'url':
         "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/19494072/2022/8/24/fbd5a6dd-2f67-48fc-9341-72f91acca09b1661330892106-Kurta-Pyjama-Set-2971661330890568-1.jpg"
   },
@@ -64,7 +66,10 @@ class ProductHome extends StatelessWidget {
           style: GoogleFonts.abhayaLibre(color: Colors.black),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
+          IconButton(
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => Cartscreen())),
+              icon: const Icon(Icons.shopping_cart))
         ],
         backgroundColor: mainColor,
       ),
@@ -149,8 +154,8 @@ class ProductHome extends StatelessWidget {
                       child: TabBarView(
                         clipBehavior: Clip.none,
                         children: [
-                          _categories(context, data),
-                          _categories(context, data),
+                          _categories(context, data, 'rent'),
+                          _categories(context, data, 'sale'),
                         ],
                       ),
                     ),
@@ -190,7 +195,7 @@ Widget _appbar(context) {
               width: 30,
             ),
             Text(
-              "Partsbay",
+              "thrifstore",
               style: GoogleFonts.oxygen(
                   fontSize: 25,
                   color: Colors.black,
@@ -248,7 +253,7 @@ Widget _appbar(context) {
   );
 }
 
-Widget _categories(context, List<Map<String, dynamic>> data) {
+Widget _categories(context, List<Map<String, dynamic>> data, String type) {
   return SizedBox(
     width: double.infinity,
     height: 700,
@@ -261,11 +266,9 @@ Widget _categories(context, List<Map<String, dynamic>> data) {
           SliverChildBuilderDelegate((BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return Catadata(
-            //     docdata: data[index]['title'].toString().toLowerCase(),
-            //   );
-            // }));
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Productlisting(type: type, category: data[index]['title']);
+            }));
           },
           child: Container(
             margin: const EdgeInsets.all(7),

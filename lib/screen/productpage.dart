@@ -1,0 +1,502 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_swiper_tv/flutter_swiper.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:thriftstore/home/productscreen.dart';
+import 'package:thriftstore/widgets.dart';
+
+class ProductPage extends StatefulWidget {
+  final QueryDocumentSnapshot<Object?>? data;
+  const ProductPage({super.key, required this.data});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: mainColor,
+        title: Text(widget.data?['name']),
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 500,
+              child: Swiper(
+                fade: 1,
+                autoplay: false,
+                // itemCount: links.length,
+                controller: SwiperController(),
+                pagination: SwiperPagination(
+                  builder: SwiperPagination.dots,
+                  alignment: Alignment.bottomCenter,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: Image.network(
+                      widget.data?['url'],
+                      fit: BoxFit.contain,
+                    ),
+                  );
+                },
+                itemCount: 1,
+              ),
+            ),
+
+            SizedBox(
+              height: 5,
+            ),
+
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              '₹${widget.data!.get('price')}',
+              style: GoogleFonts.lato(color: mainColor, fontSize: 20),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: 130,
+              height: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25), color: mainColor),
+              child: Center(
+                  child: Text(
+                "ADD TO CART",
+                style: GoogleFonts.lato(
+                    color: Colors.white, fontWeight: FontWeight.bold),
+              )),
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+            ),
+            //   child: Center(
+            //     child: ListView.builder(
+            //       physics: ScrollPhysics(
+            //           parent: AlwaysScrollableScrollPhysics()),
+            //       shrinkWrap: true,
+            //       scrollDirection: Axis.horizontal,
+            //       itemBuilder:
+            //           (BuildContext context, int index) {
+            //         return GestureDetector(
+            //             onTap: () {
+            //               //changesize(index);
+            //             },
+            //             child: Container(
+            //               margin: EdgeInsets.symmetric(
+            //                   horizontal: 5, vertical: 5),
+            //               height: 40,
+            //               width: 40,
+            //               decoration: BoxDecoration(
+            //                   borderRadius:
+            //                       BorderRadius.circular(13),
+            //                   color: clr[index],
+            //                   border: Border.all(color: mainColor)),
+            //               child: Center(
+            //                 child: Text(
+            //                     sizesandcountdata[sizeindex]
+            //                         .get('size')
+            //                         .toUpperCase()),
+            //               ),
+            //             ));
+            //       },
+            //       itemCount: (sizesandcountdata.length),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   width: double.infinity,
+            //   height: 70 * 4,
+            //   child: ListView.builder(
+            //       scrollDirection: Axis.vertical,
+            //       controller: ScrollController(keepScrollOffset: false),
+            //       itemCount: 4,
+            //       shrinkWrap: true,
+            //       itemBuilder: (BuildContext context, int index) {
+            //         return SizedBox(
+            //           height: 50,
+            //           width: MediaQuery.of(context).size.width * 0.8,
+            //           child: Card(
+            //             child: ListTile(
+            //               leading: Text("Name"),
+            //               title: Text("review"),
+            //             ),
+            //           ),
+            //         );
+            //       }),
+            // ),
+            // TextButton(
+            //     onPressed: () {},
+            //     child: Text(
+            //       "view all reviews",
+            //       style: GoogleFonts.lato(color: mainColor),
+            //     )),
+            // TextButton(
+            //     onPressed: () {},
+            //     child: Text(
+            //       "Add review",
+            //       style: GoogleFonts.lato(color: mainColor),
+            //     )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_swiper_tv/flutter_swiper.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:partsbay/add_data/add_user.dart';
+// import 'package:partsbay/admin/inneradminpages/updatedata.dart';
+// import 'package:partsbay/colorsandfontsandwidgets.dart';
+// import 'package:partsbay/inner_screen/loadingpage.dart';
+// import 'package:partsbay/inner_screen/somethingwentwrong.dart';
+// import 'package:partsbay/myicons_icons.dart';
+// import 'package:partsbay/screens/mappage.dart';
+
+// class Itempage extends StatefulWidget {
+//   final DocumentSnapshot data;
+//   const Itempage({Key? key, required this.data}) : super(key: key);
+
+//   @override
+//   _ItempageState createState() => _ItempageState(data);
+// }
+
+// class _ItempageState extends State<Itempage> {
+//   final DocumentSnapshot data;
+
+//   _ItempageState(this.data);
+//   int sizeindex = 0;
+//   List<Color> clr = [
+//     Colors.grey.shade200,
+//     Colors.grey.shade200,
+//     Colors.grey.shade200,
+//     Colors.grey.shade200,
+//     Colors.grey.shade200,
+//     Colors.grey.shade200,
+//   ];
+//   bool isSelected = false;
+//   @override
+//   Widget build(BuildContext context) {
+//     List<dynamic> links = data.get('url');
+
+//     void changesize(int val) {
+//       setState(() {
+//         sizeindex = val;
+//         isSelected = true;
+//         clr[0] = Colors.grey.shade200;
+//         clr[1] = Colors.grey.shade200;
+//         clr[2] = Colors.grey.shade200;
+//         clr[3] = Colors.grey.shade200;
+//         clr[4] = Colors.grey.shade200;
+//         clr[5] = Colors.grey.shade200;
+
+//         clr[val] = green;
+//       });
+//     }
+
+//     String id = data.get('id').toString();
+//     String uid = FirebaseAuth.instance.currentUser!.uid;
+//     return FutureBuilder<QuerySnapshot>(
+//         future: FirebaseFirestore.instance
+//             .collection("products")
+//             .doc(id)
+//             .collection("sizes&count")
+//             .get(),
+//         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//           if (snapshot.hasData == true) {
+//             List<DocumentSnapshot> sizesandcountdata = snapshot.data!.docs;
+//             return Scaffold(
+//               bottomSheet: Container(
+//                 height: 70,
+//                 width: double.infinity,
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     InkWell(
+//                       onTap: () {
+//                         Navigator.push(context,
+//                             MaterialPageRoute(builder: (context) {
+//                           return MAppage();
+//                         }));
+//                       },
+//                       child: Container(
+//                         width: 130,
+//                         height: 40,
+//                         decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(25),
+//                             color: green),
+//                         child: Center(
+//                             child: Text(
+//                           "Offline",
+//                           style: GoogleFonts.lato(
+//                               color: mainColor, fontWeight: FontWeight.bold),
+//                         )),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       width: 40,
+//                     ),
+//                     InkWell(
+//                       onTap: () async {
+//                         if (isSelected == true) {
+//                           await addtocart(
+//                               context,
+//                               uid,
+//                               (id + sizesandcountdata[sizeindex].get('size')),
+//                               links[0],
+//                               data.get('price').toDouble(),
+//                               data.get('description'),
+//                               data.get('title'),
+//                               sizesandcountdata[sizeindex].get('size'),
+//                               id);
+//                           showdialogue(context, 'success', "Added to cart");
+//                         } else {
+//                           showDialog(
+//                               context: context,
+//                               builder: (BuildContext context) {
+//                                 return alert(context);
+//                               });
+//                         }
+//                       },
+//                       child: Container(
+//                         width: 130,
+//                         height: 40,
+//                         decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(25),
+//                             color: green),
+//                         child: Center(
+//                             child: Text(
+//                           "ADD TO CART",
+//                           style: GoogleFonts.lato(
+//                               color: mainColor, fontWeight: FontWeight.bold),
+//                         )),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               body: Container(
+//                 child: Stack(
+//                   children: [
+//                     SingleChildScrollView(
+//                       scrollDirection: Axis.vertical,
+//                       child: Container(
+//                         child: Column(
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           children: [
+//                             Container(
+//                               height: 500,
+//                               child: Swiper(
+//                                 fade: 1,
+//                                 autoplay: false,
+//                                 itemCount: links.length,
+//                                 controller: SwiperController(),
+//                                 pagination: SwiperPagination(
+//                                   builder: SwiperPagination.dots,
+//                                   alignment: Alignment.bottomCenter,
+//                                 ),
+//                                 itemBuilder: (BuildContext context, int index) {
+//                                   return Card(
+//                                     child: Image.network(
+//                                       links[index],
+//                                       fit: BoxFit.contain,
+//                                     ),
+//                                   );
+//                                 },
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 20,
+//                             ),
+//                             Text(
+//                               data.get('title'),
+//                               style: GoogleFonts.lato(
+//                                   fontSize: 20,
+//                                   fontWeight: FontWeight.bold,
+//                                   color: mainColor),
+//                             ),
+//                             SizedBox(
+//                               height: 20,
+//                             ),
+//                             Text(
+//                               data.get('bike'),
+//                               style: GoogleFonts.lato(
+//                                   fontSize: 14,
+//                                   fontWeight: FontWeight.bold,
+//                                   color: mainColor),
+//                             ),
+//                             SizedBox(
+//                               height: 5,
+//                             ),
+//                             Text(
+//                               data.get('description'),
+//                               style: GoogleFonts.lato(
+//                                 color: mainColor,
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 20,
+//                             ),
+//                             Text(
+//                               '₹' + data.get('price').toString(),
+//                               style:
+//                                   GoogleFonts.lato(color: mainColor, fontSize: 20),
+//                             ),
+//                             SizedBox(
+//                               height: 20,
+//                             ),
+//                             SizedBox(
+//                               width: double.infinity,
+//                               height: 50,
+//                               child: Center(
+//                                 child: ListView.builder(
+//                                   physics: ScrollPhysics(
+//                                       parent: AlwaysScrollableScrollPhysics()),
+//                                   shrinkWrap: true,
+//                                   scrollDirection: Axis.horizontal,
+//                                   itemBuilder:
+//                                       (BuildContext context, int index) {
+//                                     return GestureDetector(
+//                                         onTap: () {
+//                                           changesize(index);
+//                                         },
+//                                         child: Container(
+//                                           margin: EdgeInsets.symmetric(
+//                                               horizontal: 5, vertical: 5),
+//                                           height: 40,
+//                                           width: 40,
+//                                           decoration: BoxDecoration(
+//                                               borderRadius:
+//                                                   BorderRadius.circular(13),
+//                                               color: clr[index],
+//                                               border: Border.all(color: mainColor)),
+//                                           child: Center(
+//                                             child: Text(
+//                                                 sizesandcountdata[sizeindex]
+//                                                     .get('size')
+//                                                     .toUpperCase()),
+//                                           ),
+//                                         ));
+//                                   },
+//                                   itemCount: (sizesandcountdata.length),
+//                                 ),
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               width: double.infinity,
+//                               height: 70 * 4,
+//                               child: ListView.builder(
+//                                   scrollDirection: Axis.vertical,
+//                                   controller:
+//                                       ScrollController(keepScrollOffset: false),
+//                                   itemCount: 4,
+//                                   shrinkWrap: true,
+//                                   itemBuilder:
+//                                       (BuildContext context, int index) {
+//                                     return SizedBox(
+//                                       height: 50,
+//                                       width: MediaQuery.of(context).size.width *
+//                                           0.8,
+//                                       child: Card(
+//                                         child: ListTile(
+//                                           leading: Text("Name"),
+//                                           title: Text("review"),
+//                                         ),
+//                                       ),
+//                                     );
+//                                   }),
+//                             ),
+//                             TextButton(
+//                                 onPressed: () {},
+//                                 child: Text(
+//                                   "view all reviews",
+//                                   style: GoogleFonts.lato(color: mainColor),
+//                                 )),
+//                             TextButton(
+//                                 onPressed: () {},
+//                                 child: Text(
+//                                   "Add review",
+//                                   style: GoogleFonts.lato(color: mainColor),
+//                                 )),
+//                             SizedBox(
+//                               height: 100,
+//                             )
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                     Positioned(
+//                       left: 20,
+//                       top: 30,
+//                       child: Container(
+//                         height: 40,
+//                         width: 40,
+//                         decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(10),
+//                             color: Colors.grey.shade300),
+//                         child: IconButton(
+//                           icon: Icon(
+//                             Icons.arrow_back,
+//                             color: mainColor,
+//                           ),
+//                           onPressed: () {
+//                             Navigator.pop(context);
+//                           },
+//                         ),
+//                       ),
+//                     ),
+//                     Positioned(
+//                       right: 20,
+//                       top: 35,
+//                       child: Container(
+//                         height: 40,
+//                         width: 40,
+//                         decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(10),
+//                             color: greybackground),
+//                         child: IconButton(
+//                           icon: Icon(
+//                             Myicons.heart_empty,
+//                             size: 20,
+//                             color: mainColor,
+//                           ),
+//                           onPressed: () {
+//                             addtowishlist(
+//                                 context,
+//                                 uid,
+//                                 (id + sizesandcountdata[sizeindex].get('size')),
+//                                 links[0],
+//                                 data.get('price').toDouble(),
+//                                 data.get('description'),
+//                                 data.get('title'),
+//                                 sizesandcountdata[sizeindex].get('size'),
+//                                 id);
+//                           },
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             );
+//           } else if (snapshot.hasError == true) {
+//             return SOmethingwentwrong();
+//           } else {
+//             return Loadingpage();
+//           }
+//         });
+//   }
+// }

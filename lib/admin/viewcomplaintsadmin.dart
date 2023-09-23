@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:thriftstore/admin/adminfunctions.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
 import 'package:thriftstore/widgets.dart';
 

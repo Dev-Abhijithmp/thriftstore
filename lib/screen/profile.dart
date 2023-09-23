@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:thriftstore/authentication/authenticate.dart';
-import 'package:thriftstore/authentication/signoutstates.dart';
 import 'package:thriftstore/innerscreen/loadingpage.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
 import 'package:thriftstore/widgets.dart';
