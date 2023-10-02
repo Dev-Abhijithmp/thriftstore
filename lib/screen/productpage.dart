@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:thriftstore/add/add_data.dart';
 import 'package:thriftstore/home/productscreen.dart';
 import 'package:thriftstore/widgets.dart';
 
@@ -33,7 +34,7 @@ class _ProductPageState extends State<ProductPage> {
                 autoplay: false,
                 // itemCount: links.length,
                 controller: SwiperController(),
-                pagination: SwiperPagination(
+                pagination: const SwiperPagination(
                   builder: SwiperPagination.dots,
                   alignment: Alignment.bottomCenter,
                 ),
@@ -49,33 +50,45 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
               '₹${widget.data!.get('price')}',
               style: GoogleFonts.lato(color: mainColor, fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Container(
-              width: 130,
-              height: 40,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25), color: mainColor),
-              child: Center(
-                  child: Text(
-                "ADD TO CART",
-                style: GoogleFonts.lato(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              )),
+            InkWell(
+              onTap: () async {
+                await addtocart(
+                    context,
+                    widget.data!.get('uid'),
+                    '',
+                    widget.data!.get('url'),
+                    widget.data!.get('price'),
+                    widget.data!.get('name'),
+                    widget.data!.get('type'));
+              },
+              child: Container(
+                width: 130,
+                height: 40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25), color: mainColor),
+                child: Center(
+                    child: Text(
+                  "ADD TO CART",
+                  style: GoogleFonts.lato(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                )),
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               width: double.infinity,
               height: 50,
             ),

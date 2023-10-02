@@ -8,22 +8,26 @@ import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
 import 'package:thriftstore/widgets.dart';
 
 class Cartscreen extends StatefulWidget {
-  Cartscreen({
+  const Cartscreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  _CartscreenState createState() => _CartscreenState();
+  CartscreenState createState() => CartscreenState();
 }
 
-class _CartscreenState extends State<Cartscreen> {
+class CartscreenState extends State<Cartscreen> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: mainColor,
+        title: const Text("Cart"),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -36,11 +40,11 @@ class _CartscreenState extends State<Cartscreen> {
                     .snapshots(includeMetadataChanges: false),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError == true) {
-                    return Somethingwentwrong();
+                    return const Somethingwentwrong();
                   }
                   if (snapshot.hasData == true) {
                     List<DocumentSnapshot> cartdata = snapshot.data!.docs;
-                    if (cartdata.length == 0) {
+                    if (cartdata.isEmpty) {
                       return Container();
                       //return Emptycart(title: 'cart');
                     } else {
@@ -52,16 +56,16 @@ class _CartscreenState extends State<Cartscreen> {
                               height: 230 * (cartdata.length).toDouble(),
                               width: double.infinity,
                               child: ListView.builder(
-                                padding: EdgeInsets.symmetric(vertical: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, index) {
                                   return singlecartitem(
                                       context,
                                       cartdata[index].get('url'),
                                       cartdata[index].get('title'),
                                       cartdata[index].get('price').toDouble(),
-                                      cartdata[index].get('description'),
                                       cartdata[index].get('size'),
                                       cartdata[index].get('id'),
                                       cartdata[index].get('count'),
@@ -98,7 +102,7 @@ class _CartscreenState extends State<Cartscreen> {
                       );
                     }
                   } else {
-                    return Loadingpage();
+                    return const Loadingpage();
                   }
                 }),
           ),
@@ -110,12 +114,12 @@ class _CartscreenState extends State<Cartscreen> {
 }
 
 Widget singlecartitem(context, String url, String title, double price,
-    String description, String size, String cartid, int count, String mainid) {
+    String size, String cartid, int count, String mainid) {
   return SizedBox(
     width: MediaQuery.of(context).size.height * 0.9,
     child: Container(
       height: 150,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           border: Border.all(color: mainColor)),
@@ -132,7 +136,7 @@ Widget singlecartitem(context, String url, String title, double price,
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
@@ -144,17 +148,17 @@ Widget singlecartitem(context, String url, String title, double price,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                           color: mainColor)),
-                  Text(
-                    description,
-                    style: GoogleFonts.lato(fontSize: 12, color: mainColor),
-                  ),
+                  // Text(
+                  //   description,
+                  //   style: GoogleFonts.lato(fontSize: 12, color: mainColor),
+                  // ),
                   // sizedh(5),
                   Text("₹" + price.toString(),
                       style: GoogleFonts.lato(fontSize: 15, color: mainColor)),
                   //  sizedh(5),
                   Text(size,
                       style: GoogleFonts.lato(fontSize: 15, color: mainColor)),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -176,7 +180,7 @@ Widget singlecartitem(context, String url, String title, double price,
                                 padding: const EdgeInsets.only(right: 2),
                                 child: Transform.rotate(
                                   angle: -33,
-                                  child: Text(
+                                  child: const Text(
                                     "|",
                                     style: TextStyle(
                                         color: mainColor,
@@ -187,7 +191,7 @@ Widget singlecartitem(context, String url, String title, double price,
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       Container(
@@ -195,7 +199,7 @@ Widget singlecartitem(context, String url, String title, double price,
                         height: 28,
                         //child: Center(child: cartcount(cartid)),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       InkWell(
@@ -217,13 +221,13 @@ Widget singlecartitem(context, String url, String title, double price,
                           decoration: BoxDecoration(
                               border: Border.all(color: mainColor),
                               borderRadius: BorderRadius.circular(10)),
-                          child: Icon(
+                          child: const Icon(
                             Icons.add,
                             color: mainColor,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 60,
                       ),
                       InkWell(
@@ -237,7 +241,7 @@ Widget singlecartitem(context, String url, String title, double price,
                           decoration: BoxDecoration(
                               border: Border.all(color: mainColor),
                               borderRadius: BorderRadius.circular(10)),
-                          child: Icon(
+                          child: const Icon(
                             Icons.delete,
                             color: mainColor,
                           ),

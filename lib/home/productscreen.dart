@@ -235,17 +235,6 @@ Widget _appbar(context) {
                 ),
               ),
             ),
-            IconButton(
-                onPressed: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //   return Wishlistpage(uid: uid);
-                  // }));
-                },
-                icon: Icon(
-                  Icons.heart_broken,
-                  size: 20,
-                  color: Colors.black,
-                )),
           ],
         )
       ],

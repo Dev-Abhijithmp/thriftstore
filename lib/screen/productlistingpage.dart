@@ -38,31 +38,37 @@ class _ProductlistingState extends State<Productlisting> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
+                    childAspectRatio: 0.9,
                     crossAxisCount: 2),
                 itemCount: snapshot.data?.docs.length,
                 itemBuilder: (context, index) => InkWell(
-                  onTap: () => Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => ProductPage(data: snapshot.data?.docs[index],))),
+                  onTap: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ProductPage(
+                                data: snapshot.data?.docs[index],
+                              ))),
                   child: Container(
                     margin: const EdgeInsets.all(10),
                     width: 200,
-                    height: 100,
+                    height: 200,
                     decoration: BoxDecoration(
                         border: Border.all(color: mainColor),
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                              snapshot.data?.docs[index].get('url')),
-                        ),
+                            padding: EdgeInsets.all(8.0),
+                            child: Image(
+                                height: 120,
+                                image: NetworkImage(
+                                    snapshot.data?.docs[index].get('url')))),
                         Text(
                           snapshot.data?.docs[index].get('name'),
                           style: GoogleFonts.lato(fontSize: 17),
                         ),
                         Text(
-                          "${snapshot.data?.docs[index].get('price')} Rs",
+                          "Price :${snapshot.data?.docs[index].get('price')} Rs",
                           style: GoogleFonts.lato(fontSize: 17),
                         ),
                       ],

@@ -33,7 +33,7 @@ class AddProductState extends State<AddProduct> {
     void pickImagecamera() async {
       final picker = ImagePicker();
       XFile? pickedImage =
-          await picker.pickImage(source: ImageSource.gallery, imageQuality: 5);
+          await picker.pickImage(source: ImageSource.gallery, imageQuality: 15);
       File? pickedImageFile;
       pickedImage == null
           ? pickedImageFile = null
@@ -208,9 +208,7 @@ class AddProductState extends State<AddProduct> {
                     showdialogue("Error", "Fill all the fields", context);
                   } else {
                     isloading = true;
-                    setState(() {
-                      
-                    });
+                    setState(() {});
                     Map<String, dynamic> imageflag =
                         await addimagetostorage(_pickedImage!);
                     if (imageflag['status'] == 'success') {
