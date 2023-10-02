@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:thriftstore/add/add_data.dart';
 import 'package:thriftstore/home/productscreen.dart';
+import 'package:thriftstore/screen/cart.dart';
 import 'package:thriftstore/widgets.dart';
 
 class ProductPage extends StatefulWidget {
@@ -67,13 +69,15 @@ class _ProductPageState extends State<ProductPage> {
             InkWell(
               onTap: () async {
                 await addtocart(
-                    context,
-                    widget.data!.get('uid'),
-                    '',
-                    widget.data!.get('url'),
-                    widget.data!.get('price'),
-                    widget.data!.get('name'),
-                    widget.data!.get('type'));
+                        context,
+                        FirebaseAuth.instance.currentUser!.uid,
+                        widget.data!.get('uid'),
+                        widget.data!.get('url'),
+                        double.parse(widget.data!.get('price').toString()),
+                        widget.data!.get('name'),
+                        widget.data!.get('type'))
+                    .then((value) => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cartscreen())));
               },
               child: Container(
                 width: 130,

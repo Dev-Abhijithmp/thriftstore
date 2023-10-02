@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:thriftstore/add/add_data.dart';
 import 'package:thriftstore/innerscreen/loadingpage.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
 import 'package:thriftstore/widgets.dart';
@@ -62,41 +63,40 @@ class CartscreenState extends State<Cartscreen> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, index) {
                                   return singlecartitem(
-                                      context,
-                                      cartdata[index].get('url'),
-                                      cartdata[index].get('title'),
-                                      cartdata[index].get('price').toDouble(),
-                                      cartdata[index].get('size'),
-                                      cartdata[index].get('id'),
-                                      cartdata[index].get('count'),
-                                      cartdata[index].get('mainid'));
+                                    context,
+                                    cartdata[index].get('url'),
+                                    cartdata[index].get('title'),
+                                    cartdata[index].get('price').toDouble(),
+                                    cartdata[index].get('id'),
+                                    cartdata[index].get('count'),
+                                    cartdata[index].get('type'),
+                                  );
                                 },
                                 itemCount: cartdata.length,
                               ),
                             ),
-                            // StreamBuilder<QuerySnapshot>(
-                            //     stream: FirebaseFirestore.instance
-                            //         .collection('user')
-                            //         .doc(FirebaseAuth
-                            //             .instance.currentUser!.uid)
-                            //         .collection('cart')
-                            //         .snapshots(includeMetadataChanges: true),
-                            //     builder: (context,
-                            //         AsyncSnapshot<QuerySnapshot> snapshot) {
-                            //       double total = 0.0;
-                            //       if (snapshot.hasData == true) {
-                            //         List<DocumentSnapshot> totaldata =
-                            //             snapshot.data!.docs;
+                            StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('user')
+                                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                                    .collection('cart')
+                                    .snapshots(includeMetadataChanges: true),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  double total = 0.0;
+                                  if (snapshot.hasData == true) {
+                                    List<DocumentSnapshot> totaldata =
+                                        snapshot.data!.docs;
 
-                            //         for (var item in totaldata) {
-                            //           total = total + item.get('total');
-                            //         }
+                                    for (var item in totaldata) {
+                                      total = total + item.get('total');
+                                    }
 
-                            //         return checkoutbutton(
-                            //             total, context, cartdata);
-                            //       }
-                            //       return Container();
-                            //     })
+                                    return checkoutbutton(
+                                        total, context, cartdata);
+                                  }
+                                  return Container();
+                                })
                           ],
                         ),
                       );
@@ -114,7 +114,7 @@ class CartscreenState extends State<Cartscreen> {
 }
 
 Widget singlecartitem(context, String url, String title, double price,
-    String size, String cartid, int count, String mainid) {
+    String cartid, int count, String type) {
   return SizedBox(
     width: MediaQuery.of(context).size.height * 0.9,
     child: Container(
@@ -128,7 +128,7 @@ Widget singlecartitem(context, String url, String title, double price,
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: 100,
                 height: 80,
                 child: Image.network(
@@ -153,11 +153,11 @@ Widget singlecartitem(context, String url, String title, double price,
                   //   style: GoogleFonts.lato(fontSize: 12, color: mainColor),
                   // ),
                   // sizedh(5),
-                  Text("₹" + price.toString(),
+                  Text("₹$price",
                       style: GoogleFonts.lato(fontSize: 15, color: mainColor)),
                   //  sizedh(5),
-                  Text(size,
-                      style: GoogleFonts.lato(fontSize: 15, color: mainColor)),
+                  // Text(size,
+                  //     style: GoogleFonts.lato(fontSize: 15, color: mainColor)),
                   const SizedBox(
                     height: 20,
                   ),
@@ -166,8 +166,11 @@ Widget singlecartitem(context, String url, String title, double price,
                     children: [
                       InkWell(
                         onTap: () {
-                          // subtractcount(FirebaseAuth.instance.currentUser!.uid,
-                          //     cartid, price, size);
+                          subtractcount(
+                            FirebaseAuth.instance.currentUser!.uid,
+                            cartid,
+                            price,
+                          );
                         },
                         child: Container(
                             width: 28,
@@ -194,26 +197,24 @@ Widget singlecartitem(context, String url, String title, double price,
                       const SizedBox(
                         width: 15,
                       ),
-                      Container(
+                      SizedBox(
                         width: 28,
                         height: 28,
-                        //child: Center(child: cartcount(cartid)),
+                        child: Center(child: cartcount(cartid)),
                       ),
                       const SizedBox(
                         width: 15,
                       ),
                       InkWell(
                         onTap: () {
-                          // addtocart(
-                          //     context,
-                          //     FirebaseAuth.instance.currentUser!.uid,
-                          //     cartid,
-                          //     url,
-                          //     price,
-                          //     description,
-                          //     title,
-                          //     size,
-                          //     mainid);
+                          addtocart(
+                              context,
+                              FirebaseAuth.instance.currentUser!.uid,
+                              cartid,
+                              url,
+                              price,
+                              title,
+                              type);
                         },
                         child: Container(
                           width: 28,
@@ -232,8 +233,8 @@ Widget singlecartitem(context, String url, String title, double price,
                       ),
                       InkWell(
                         onTap: () {
-                          // removefromcart(
-                          //     FirebaseAuth.instance.currentUser!.uid, cartid);
+                          removefromcart(
+                              FirebaseAuth.instance.currentUser!.uid, cartid);
                         },
                         child: Container(
                           width: 30,
@@ -257,4 +258,72 @@ Widget singlecartitem(context, String url, String title, double price,
       ),
     ),
   );
+}
+
+Widget cartcount(String id) {
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('user')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('cart')
+          .doc(id)
+          .snapshots(includeMetadataChanges: true),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.active ||
+            snapshot.connectionState == ConnectionState.done) {
+          DocumentSnapshot<Map<String, dynamic>> data = snapshot.data;
+
+          if (data.exists == true) {
+            return Text(
+              '${data.get('count')}',
+              style: GoogleFonts.lato(fontSize: 15, color: mainColor),
+            );
+          } else {
+            return Text('');
+          }
+        }
+
+        return Text('');
+      });
+}
+
+Widget totalcartcount() {
+  return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('user')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('cart')
+          .snapshots(includeMetadataChanges: true),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active ||
+            snapshot.connectionState == ConnectionState.done) {
+          List<DocumentSnapshot> data = snapshot.data!.docs;
+          if (data.isNotEmpty) {
+            double total = 0;
+            for (var item in data) {
+              total = total + item.get('count');
+            }
+            return Text(
+              "${total.round()}",
+              style: GoogleFonts.lato(
+                  fontSize: 17, color: mainColor, fontWeight: FontWeight.bold),
+            );
+          } else {
+            return Text("");
+          }
+        }
+
+        return Text("");
+      });
+}
+
+Future<Map<String, String?>> addnametodatabase(String uid, String name) async {
+  try {
+    await FirebaseFirestore.instance.collection('user').doc(uid).update({
+      'name': name,
+    });
+    return {'status': "success"};
+  } on FirebaseException catch (e) {
+    return {'status': e.message};
+  }
 }

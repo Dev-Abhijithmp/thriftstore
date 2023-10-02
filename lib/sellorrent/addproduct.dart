@@ -52,10 +52,13 @@ class AddProductState extends State<AddProduct> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: mainColor,
+      ),
       body: SingleChildScrollView(
           child: Column(children: [
         Container(
-            height: 130,
+            height: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(50),

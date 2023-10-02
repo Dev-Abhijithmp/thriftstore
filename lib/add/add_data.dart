@@ -17,6 +17,8 @@ Future<void> createuserprofile(
     'email': email,
     'phone': phone,
     'images': 0,
+    'address': '',
+    'orders': 0,
     'role': 'user'
   });
 }
@@ -24,10 +26,11 @@ Future<void> createuserprofile(
 Future<void> addtocart(context, String uid, String cartid, String url,
     double price, String title, String type) async {
   DocumentReference documentReference = user.doc(uid);
-  DocumentSnapshot<Map<String, dynamic>>? countdata =
-      await documentReference.collection('cart').doc(cartid).get();
+  QuerySnapshot<Map<String, dynamic>>? coldata =
+      await documentReference.collection('cart').get();
+  DocumentSnapshot<Map<String, dynamic>>? countdata;
 
-  if (countdata.exists == false) {
+  if (coldata.docs.isEmpty) {
     await documentReference.collection('cart').doc(cartid).set({
       'type': type,
       'id': cartid,
@@ -38,14 +41,27 @@ Future<void> addtocart(context, String uid, String cartid, String url,
       'total': price
     });
   } else {
-    await documentReference
-        .collection('cart')
-        .doc(cartid)
-        .update({'count': (countdata.get('count') + 1)});
-    await documentReference
-        .collection('cart')
-        .doc(cartid)
-        .update({'total': ((countdata.get('count') + 1) * price)});
+    countdata = await documentReference.collection('cart').doc(cartid).get();
+    if (countdata.exists) {
+      await documentReference
+          .collection('cart')
+          .doc(cartid)
+          .update({'count': (countdata!.get('count') + 1)});
+      await documentReference
+          .collection('cart')
+          .doc(cartid)
+          .update({'total': ((countdata.get('count') + 1) * price)});
+    } else {
+      await documentReference.collection('cart').doc(cartid).set({
+        'type': type,
+        'id': cartid,
+        'count': 1,
+        'title': title,
+        'url': url,
+        'price': price,
+        'total': price
+      });
+    }
   }
 }
 
@@ -132,8 +148,7 @@ Future<Map<String, dynamic>> removeorder(
 //   }
 // }
 
-Future<void> subtractcount(
-    String uid, String cartid, double price, String size) async {
+Future<void> subtractcount(String uid, String cartid, double price) async {
   DocumentReference documentReference = user.doc(uid);
   DocumentSnapshot<Map<String, dynamic>>? countdata =
       await documentReference.collection('cart').doc(cartid).get();
@@ -167,9 +182,8 @@ Future<Map<String, dynamic>> addorder(
   String uid,
   List<String> itemids,
   List<String> urls,
-  List<String> sizes,
   int totalamount,
-  List<String> mainids,
+  // List<String> mainids,
   String mode,
   List<Map<String, dynamic>> priceandcount,
 ) async {
@@ -179,20 +193,15 @@ Future<Map<String, dynamic>> addorder(
     DocumentSnapshot<Map<String, dynamic>> temp = await FirebaseFirestore
         .instance
         .collection('products')
-        .doc(mainids[i])
-        .collection('sizes&count')
-        .doc(sizes[i])
+        .doc(itemids[i])
         .get();
 
-    await FirebaseFirestore.instance
-        .collection('products')
-        .doc(mainids[i])
-        .collection('sizes&count')
-        .doc(sizes[i])
-        .update({
-      'size': sizes[i],
-      'sizecount': (temp.get('sizecount') - priceandcount[i]['count']),
-    });
+    // await FirebaseFirestore.instance
+    //     .collection('products')
+    //     .doc(itemids[i])
+    //     .update({
+    //   'sizecount': (temp.get('sizecount') - priceandcount[i]['count']),
+    // });
   }
 
   try {
@@ -205,7 +214,7 @@ Future<Map<String, dynamic>> addorder(
       'itemids': itemids,
       'uid': uid,
       'urls': urls,
-      'sizes': sizes,
+      // 'sizes': sizes,
       'price&count': priceandcount,
       'totalamount': totalamount,
       'mode': mode,
@@ -222,7 +231,7 @@ Future<Map<String, dynamic>> addorder(
       'itemids': itemids,
       'uid': uid,
       'urls': urls,
-      'sizes': sizes,
+      // 'sizes': sizes,
       'price&count': priceandcount,
       'totalamount': totalamount,
       'mod': mode,

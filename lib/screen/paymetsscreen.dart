@@ -12,30 +12,27 @@ class Payment extends StatefulWidget {
   late final String uid;
   late final List<String> itemids;
   late final List<String> urls;
-  late final List<String> sizes;
+
   late final int totalamount;
   late final List<Map<String, dynamic>> priceandcount;
   late final List<String> mainids;
-  Payment(
-      {Key? key,
-      required this.uid,
-      required this.itemids,
-      required this.priceandcount,
-      required this.sizes,
-      required this.totalamount,
-      required this.urls,
-      required this.mainids})
-      : super(key: key);
+  Payment({
+    Key? key,
+    required this.uid,
+    required this.itemids,
+    required this.priceandcount,
+    required this.totalamount,
+    required this.urls,
+  }) : super(key: key);
 
   @override
   _PaymentState createState() => _PaymentState(
-      uid: uid,
-      itemids: itemids,
-      urls: urls,
-      sizes: sizes,
-      totalamount: totalamount,
-      priceandcount: priceandcount,
-      mainids: mainids);
+        uid: uid,
+        itemids: itemids,
+        urls: urls,
+        totalamount: totalamount,
+        priceandcount: priceandcount,
+      );
 }
 
 String? _month;
@@ -47,18 +44,17 @@ class _PaymentState extends State<Payment> {
   late final String uid;
   late final List<String> itemids;
   late final List<String> urls;
-  late final List<String> sizes;
+
   late final int totalamount;
   late final List<Map<String, dynamic>> priceandcount;
   late final List<String> mainids;
-  _PaymentState(
-      {required this.uid,
-      required this.itemids,
-      required this.priceandcount,
-      required this.sizes,
-      required this.totalamount,
-      required this.urls,
-      required this.mainids});
+  _PaymentState({
+    required this.uid,
+    required this.itemids,
+    required this.priceandcount,
+    required this.totalamount,
+    required this.urls,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -235,7 +231,7 @@ class _PaymentState extends State<Payment> {
                     _cvvcontroller.text == "123" &&
                     _cardNumberController.text == "1234567890123456") {
                   Map<String, dynamic> flag = await addorder(uid, itemids, urls,
-                      sizes, totalamount, mainids, "prepaid", priceandcount);
+                      totalamount, "prepaid", priceandcount);
 
                   if (flag['status'] == 'success') {
                     for (var item in itemids) {
