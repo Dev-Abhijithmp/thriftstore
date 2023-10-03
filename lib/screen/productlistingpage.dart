@@ -38,7 +38,7 @@ class _ProductlistingState extends State<Productlisting> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    childAspectRatio: 0.9,
+                    childAspectRatio: 0.7,
                     crossAxisCount: 2),
                 itemCount: snapshot.data?.docs.length,
                 itemBuilder: (context, index) => InkWell(
