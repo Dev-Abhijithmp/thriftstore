@@ -28,6 +28,7 @@ Future<Map<String, String>> addproduct({
         .set({
       'uid': FirebaseAuth.instance.currentUser!.uid +
           (documentSnapshot.get('images') + 1).toString(),
+      'userid': FirebaseAuth.instance.currentUser!.uid,
       'address': address,
       'category': category,
       'type': type,
@@ -52,8 +53,6 @@ Future<Map<String, String>> addproduct({
     return {'status': e.message.toString()};
   }
 }
-
-
 
 FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 Future<Map<String, String>> addimagetostorage(File images) async {

@@ -58,7 +58,7 @@ class _ProductlistingState extends State<Productlisting> {
                     child: Column(
                       children: [
                         Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Image(
                                 height: 120,
                                 image: NetworkImage(

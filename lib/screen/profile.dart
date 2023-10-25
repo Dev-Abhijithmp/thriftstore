@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:thriftstore/authentication/authenticate.dart';
 import 'package:thriftstore/innerscreen/loadingpage.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
+import 'package:thriftstore/screen/myproducts.dart';
+import 'package:thriftstore/screen/productpage.dart';
 import 'package:thriftstore/widgets.dart';
 
 class Profilepage extends StatelessWidget {
@@ -82,6 +84,22 @@ class Profilepage extends StatelessWidget {
                           subtitle: Text(
                             doc.get('phone'),
                             style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: () => Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => MyProducts())),
+                          child: Container(
+                            width: 200,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: mainColor,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Center(
+                              child: Text("View My products"),
+                            ),
                           ),
                         ),
                         SizedBox(height: 10),

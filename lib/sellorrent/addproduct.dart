@@ -26,6 +26,7 @@ File? _pickedImage;
 bool loading = false;
 bool show = true;
 String dropdownValue = 'ring';
+String menorwomen = 'men';
 
 class AddProductState extends State<AddProduct> {
   @override
@@ -172,6 +173,32 @@ class AddProductState extends State<AddProduct> {
               });
             },
             items: <String>['ring', 'bangle', 'chain', 'kurtha', 'saree']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: DropdownButtonFormField<String>(
+            decoration: InputDecoration(labelText: 'Men or Women:'), 
+            value: menorwomen,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            onChanged: (String? newValue) {
+              setState(() {
+                menorwomen = newValue!;
+              });
+            },
+            items: <String>['men', 'women']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
