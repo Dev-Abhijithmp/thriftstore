@@ -19,6 +19,7 @@ class _SigninoutState extends State<Signinout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.blue,
       body: StreamBuilder(
           stream: changesign,

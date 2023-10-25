@@ -172,8 +172,22 @@ class AddProductState extends State<AddProduct> {
                 dropdownValue = newValue!;
               });
             },
-            items: <String>['ring', 'bangle', 'chain', 'kurtha', 'saree']
-                .map<DropdownMenuItem<String>>((String value) {
+            items: <String>[
+              'ring',
+              'bangle',
+              'chain',
+              'kurtha',
+              'sarees',
+              'jumpsuits',
+              'skirts',
+              'earings',
+              'croptops',
+              'tshirts',
+              'shirts',
+              'nosering',
+              'jacket',
+              'jeans'
+            ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -187,7 +201,7 @@ class AddProductState extends State<AddProduct> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: DropdownButtonFormField<String>(
-            decoration: InputDecoration(labelText: 'Men or Women:'), 
+            decoration: InputDecoration(labelText: 'Men or Women:'),
             value: menorwomen,
             icon: const Icon(Icons.arrow_downward),
             iconSize: 24,

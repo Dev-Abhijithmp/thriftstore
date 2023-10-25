@@ -40,6 +40,50 @@ List<Map<String, dynamic>> data = [
     'url':
         "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/19494072/2022/8/24/fbd5a6dd-2f67-48fc-9341-72f91acca09b1661330892106-Kurta-Pyjama-Set-2971661330890568-1.jpg"
   },
+  {
+    'title': "earings",
+    'url': "https://images.meesho.com/images/products/163480505/c74tq_512.webp"
+  },
+  {
+    'title': "skirts",
+    'url': "https://images.meesho.com/images/products/296944048/uvtkl_512.webp"
+  },
+  {
+    'title': "jumpsuits",
+    'url': "https://images.meesho.com/images/products/78646700/qhmpa_512.webp"
+  },
+  {
+    'title': "sarees",
+    'url':
+        "https://rukminim2.flixcart.com/image/832/832/kwqq1zk0/sari/t/h/p/free-design-beautiful-rich-pallu-jacquard-pattern-work-on-all-original-imag9csvmfwgjnv4.jpeg?q=70"
+  },
+  {
+    'title': "croptops",
+    'url': "https://images.meesho.com/images/products/140820965/t0ane_512.webp"
+  },
+  {
+    'title': "tshirts",
+    'url':
+        "https://rukminim2.flixcart.com/image/832/832/kph8h3k0/t-shirt/u/t/g/l-dlgrfs005pgrn-dillinger-original-imag3p5xqjxs4sjh.jpeg?q=70"
+  },
+  {
+    'title': "shirts",
+    'url':
+        "https://rukminim2.flixcart.com/image/832/832/xif0q/shirt/8/y/k/xl-tbh-zano-mc-the-bear-house-original-imagtnwuzwrzu9ze.jpeg?q=70"
+  },
+  {
+    'title': "nosering",
+    'url':
+        "https://silverpoetry.in/cdn/shop/products/PNP10-1_a6129fd3-6780-45a3-b574-f812254b4997_700x.jpg?v=1693337869"
+  },
+  {
+    'title': "jacket",
+    'url': "https://images.meesho.com/images/products/172047293/vyhm3_512.webp"
+  },
+  {
+    'title': "jeans",
+    'url': "https://images.meesho.com/images/products/305058619/yigdo_512.webp"
+  },
 ];
 
 class ProductHome extends StatelessWidget {
@@ -150,7 +194,7 @@ class ProductHome extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 700,
+                      height: 1500,
                       child: TabBarView(
                         clipBehavior: Clip.none,
                         children: [
@@ -243,46 +287,42 @@ Widget _appbar(context) {
 }
 
 Widget _categories(context, List<Map<String, dynamic>> data, String type) {
-  return SizedBox(
-    width: double.infinity,
-    height: 700,
-    child: GridView.custom(
-      scrollDirection: Axis.vertical,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, childAspectRatio: 0.8),
-      childrenDelegate:
-          SliverChildBuilderDelegate((BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return Productlisting(type: type, category: data[index]['title']);
-            }));
-          },
-          child: Container(
-            margin: const EdgeInsets.all(7),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: mainColor)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  height: 100,
-                  child: Image.network(
-                    data[index]['url'].toString(),
-                    fit: BoxFit.cover,
-                  ),
+  return GridView.custom(
+    scrollDirection: Axis.vertical,
+    physics: const NeverScrollableScrollPhysics(),
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, childAspectRatio: 0.8),
+    childrenDelegate:
+        SliverChildBuilderDelegate((BuildContext context, int index) {
+      return GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return Productlisting(type: type, category: data[index]['title']);
+          }));
+        },
+        child: Container(
+          margin: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: mainColor)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                height: 100,
+                child: Image.network(
+                  data[index]['url'].toString(),
+                  fit: BoxFit.cover,
                 ),
-                Text(
-                  data[index]['title'].toString(),
-                  style: GoogleFonts.lato(color: mainColor, fontSize: 20),
-                )
-              ],
-            ),
+              ),
+              Text(
+                data[index]['title'].toString(),
+                style: GoogleFonts.lato(color: mainColor, fontSize: 20),
+              )
+            ],
           ),
-        );
-      }, childCount: 5),
-    ),
+        ),
+      );
+    }, childCount: data.length),
   );
 }
