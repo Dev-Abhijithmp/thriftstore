@@ -186,7 +186,6 @@ class AddProductState extends State<AddProduct> {
               'shirts',
               'nosering',
               'jacket',
-              'jeans'
             ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,

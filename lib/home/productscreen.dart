@@ -80,10 +80,6 @@ List<Map<String, dynamic>> data = [
     'title': "jacket",
     'url': "https://images.meesho.com/images/products/172047293/vyhm3_512.webp"
   },
-  {
-    'title': "jeans",
-    'url': "https://images.meesho.com/images/products/305058619/yigdo_512.webp"
-  },
 ];
 
 class ProductHome extends StatelessWidget {
@@ -194,12 +190,12 @@ class ProductHome extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 1500,
+                      height: 1700,
                       child: TabBarView(
                         clipBehavior: Clip.none,
                         children: [
                           _categories(context, data, 'rent'),
-                          _categories(context, data, 'sale'),
+                          _categories(context, data, 'sell'),
                         ],
                       ),
                     ),

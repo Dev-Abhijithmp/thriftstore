@@ -14,9 +14,10 @@ class SearchPage extends StatefulWidget {
   State<SearchPage> createState() => _SearchPageState();
 }
 
+TextEditingController searchController = TextEditingController();
+List<DocumentSnapshot>? searchList = [];
+
 class _SearchPageState extends State<SearchPage> {
-  TextEditingController searchController = TextEditingController();
-  List<DocumentSnapshot>? searchList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +46,15 @@ class _SearchPageState extends State<SearchPage> {
                       child: TextField(
                           controller: searchController,
                           onChanged: (value) {
-                            searchList?.clear();
                             print("search values");
-                            for (var e in data) {
-                              if (e.get('name').toString().contains(
-                                  searchController.text.toLowerCase())) {
-                                searchList!.add(e!);
-                              }
-                            }
+
+                            searchList = data
+                                .where((element) => (element
+                                    .get('name')
+                                    .toLowerCase()
+                                    .contains(
+                                        searchController.text.toLowerCase())))
+                                .toList();
 
                             // searchList = data
                             //     .where((element) => element
@@ -102,15 +104,15 @@ class _SearchPageState extends State<SearchPage> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Image(
                                             height: 120,
-                                            image: NetworkImage(snapshot
-                                                .data?.docs[index]
-                                                .get('url')))),
+                                            image: NetworkImage(
+                                                searchList![index]
+                                                    .get('url')))),
                                     Text(
-                                      snapshot.data?.docs[index].get('name'),
+                                      searchList![index].get('name'),
                                       style: GoogleFonts.lato(fontSize: 17),
                                     ),
                                     Text(
-                                      "Price :${snapshot.data?.docs[index].get('price')} Rs",
+                                      "Price :${searchList![index].get('price')} Rs",
                                       style: GoogleFonts.lato(fontSize: 17),
                                     ),
                                   ],
