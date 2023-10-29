@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:thriftstore/authentication/authenticate.dart';
 import 'package:thriftstore/innerscreen/loadingpage.dart';
 import 'package:thriftstore/innerscreen/somethingwentwrong.dart';
+import 'package:thriftstore/screen/addresspage.dart';
 import 'package:thriftstore/screen/myproducts.dart';
 import 'package:thriftstore/screen/productpage.dart';
 import 'package:thriftstore/widgets.dart';
@@ -87,15 +88,41 @@ class Profilepage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
+                        ListTile(
+                          title: Text("Address"),
+                          subtitle: Text(
+                            doc.get('address'),
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => AddAddressPage())),
+                          child: Container(
+                            width: 200,
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color: mainColor,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Center(
+                              child: Text("Add address"),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
                         InkWell(
                           onTap: () => Navigator.push(context,
                               MaterialPageRoute(builder: (_) => MyProducts())),
                           child: Container(
                             width: 200,
-                            height: 50,
+                            height: 45,
                             decoration: BoxDecoration(
                               color: mainColor,
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             child: Center(
                               child: Text("View My products"),
@@ -107,10 +134,10 @@ class Profilepage extends StatelessWidget {
                           onTap: () => signout(),
                           child: Container(
                             width: 200,
-                            height: 50,
+                            height: 45,
                             decoration: BoxDecoration(
                               color: mainColor,
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             child: Center(
                               child: Text("Logout"),

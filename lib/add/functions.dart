@@ -102,6 +102,17 @@ Future<Map<String, String?>> changephone(String uid, String phone) async {
   }
 }
 
+Future<Map<String, String?>> changeAddress(String uid, String address) async {
+  try {
+    await FirebaseFirestore.instance.collection('user').doc(uid).update({
+      'address': address,
+    });
+    return {'status': "success"};
+  } on FirebaseException catch (e) {
+    return {'status': e.message.toString()};
+  }
+}
+
 Future<Map<String, String?>> updatestatus(
     String donationid, String status) async {
   try {
