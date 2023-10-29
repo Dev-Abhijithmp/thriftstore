@@ -180,6 +180,7 @@ class AddProductState extends State<AddProduct> {
               'sarees',
               'jumpsuits',
               'skirts',
+              'gowns',
               'earings',
               'croptops',
               'tshirts',
